@@ -1,6 +1,21 @@
 require ('rspec')
 require ('poker_hand')
 
+describe ('straight_check') do
+  it("should return true") do
+    straight_check([1,2,3,4,5]).should(eq(true))
+  end
+
+  it("should return false") do
+    straight_check([1,1,1,2,2]).should(eq(false))
+  end
+
+  it("should return false") do
+    straight_check([8,9,12,4,2]).should(eq(false))
+  end
+end
+
+
 describe ('poker_hand') do
 
   it ("should return high card") do
@@ -33,6 +48,22 @@ describe ('poker_hand') do
 
   it ("should return five cards in sequence as straight") do
     poker_hand(['1H', '2S', '3D', '4C', '5H']).should(eq('Straight'))
+  end
+
+  it ("Three cards of the same rank, and two cards of a different, matching rank as full house") do
+    poker_hand(['3H', '3S', '3D', '4H', '4D']).should(eq('Full House'))
+  end
+
+  it ("Five cards in numerical order, all of identical suits") do
+    poker_hand(['5S', '6S', '7S', '8S', '9S']).should(eq('Straight Flush'))
+  end
+
+  it ("should return five cards in sequence as straight with aces") do
+    poker_hand(['AH', '2H', '3H', '4H', '5D']).should(eq("Straight"))
+  end
+
+  it ("should return five cards in sequence as straight with aces and flush") do
+    poker_hand(['AH', '2H', '3H', '4H', '5H']).should(eq("Straight Flush"))
   end
 
 end

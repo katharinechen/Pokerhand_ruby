@@ -10,7 +10,7 @@ def straight_check(valueArray)
     elsif value == 'J'
        value = 11
     elsif value == 'A'
-       value = 14
+       value = 20
      else
       value.to_i
     end
@@ -19,27 +19,28 @@ def straight_check(valueArray)
   straightSort = straightSort.sort
 
 
-  for i in 0..4
-    if (straightSort[i].to_i) == straightSort[(i - 1)]
+  if (straightSort[0] + straightSort[1] + straightSort[2]) == 9
+    straightSort[-1] = 1
+  end
+
+  if (straightSort[-2] + straightSort[-3] + straightSort[-4]) == 36
+    straightSort[-1] = 14
+  end
+
+  straightSort = straightSort.sort
+
+  for i in 0..3 #(0).upto(3) do |i|
+    if (straightSort[i].to_i + 1) != straightSort[(i + 1)]
+      puts straightSort[i].to_i + 1
+      puts straightSort[(i + 1)]
       status = false
     end
   end
 
-  # index = 1
-  # straightSort.each do |value|
-  #   if value + 1 == straightSort[index]
-  #     index = index+1
-  #   else
-  #     status = false
-  #   end
-  # end
-
-  return status
+  status
 
 end
 
-puts straight_check([7,8,9,10,11])
-puts straight_check([7,7,8,8,10])
 
 def poker_hand(cards)
 
@@ -73,12 +74,16 @@ def poker_hand(cards)
   end
 
   case
+  when countTypes.has_value?(5)  &&  straight_check(valueArray)
+    return "Straight Flush"
   when countTypes.has_value?(5)
     return "Flush"
   when valueTypes.has_value?(4)
     return "Four of a Kind"
-  when straight_check(Array)
+  when straight_check(valueArray)
     return "Straight"
+  when valueTypes.has_value?(2) && valueTypes.has_value?(3)
+    return "Full House"
   when valueTypes.has_value?(3)
     return "Three of a Kind"
   when valueTypes.has_value?(2)
@@ -95,7 +100,7 @@ def poker_hand(cards)
 end
 
 
-puts poker_hand(['KH', 'KS', '8D', '8C', '6H'])
+puts poker_hand(['KH', 'JS', '10C', '6H','3D'])
 
 
 
